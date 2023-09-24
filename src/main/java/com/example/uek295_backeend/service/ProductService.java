@@ -1,6 +1,6 @@
 package com.example.uek295_backeend.service;
 
-import com.example.uek295_backeend.database.Product;
+import com.example.uek295_backeend.entity.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

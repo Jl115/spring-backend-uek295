@@ -1,6 +1,6 @@
 package com.example.uek295_backeend.controller;
 
-import com.example.uek295_backeend.database.Product;
+import com.example.uek295_backeend.entity.Product;
 import com.example.uek295_backeend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

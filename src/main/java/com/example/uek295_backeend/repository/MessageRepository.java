@@ -1,7 +1,7 @@
 package com.example.uek295_backeend.repository;
 
-import com.example.uek295_backeend.database.Message;
-import com.example.uek295_backeend.database.User;
+import com.example.uek295_backeend.entity.Message;
+import com.example.uek295_backeend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

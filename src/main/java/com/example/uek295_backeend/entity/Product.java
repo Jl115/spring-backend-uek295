@@ -1,4 +1,4 @@
-package com.example.uek295_backeend.database;
+package com.example.uek295_backeend.entity;
 
 import jakarta.persistence.*;
 
@@ -37,6 +37,8 @@ public class Product {
     public int getId() {
         return id;
     }
+
+    //Getters and Setters
 
     public void setId(int id) {
         this.id = id;

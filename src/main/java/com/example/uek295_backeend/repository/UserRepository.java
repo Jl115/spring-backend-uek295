@@ -1,9 +1,7 @@
 package com.example.uek295_backeend.repository;
 
-import com.example.uek295_backeend.database.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.uek295_backeend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
