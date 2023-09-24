@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  mariadb:
+    image: mariadb:11.1.2
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: product-manager
+    ports:
+      - "8888:3306"
+volumes:
+  mariadb_data:
