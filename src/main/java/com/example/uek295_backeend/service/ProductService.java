@@ -1,53 +1,52 @@
 package com.example.uek295_backeend.service;
 
 import com.example.uek295_backeend.entity.Product;
+import com.example.uek295_backeend.service.dtos.ProductDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Service interface for product-related operations.
- * This interface defines the contract for product operations like creation, retrieval, update, and deletion.
- */
 @Service
 public interface ProductService {
 
-    /**
-     * Creates a new product.
-     *
-     * @param product The product object to be created.
-     * @return The saved product object.
-     */
     Product create(Product product);
 
-    /**
-     * Retrieves a product by its ID.
-     *
-     * @param id The ID of the product to retrieve.
-     * @return The retrieved product.
-     */
-    Product getById(Long id);
+    ProductDTO create(ProductDTO productDto);
 
-    /**
-     * Retrieves all the products.
-     *
-     * @return A list of all products.
-     */
-    List<Product> getAll();
+    ProductDTO getById(Long id);
 
-    /**
-     * Updates a product's details.
-     *
-     * @param id      The ID of the product to update.
-     * @param product The product object with updated details.
-     * @return The updated product.
-     */
+    List<ProductDTO> getAll();
+
+    ProductDTO update(Long id, ProductDTO productDto);
+
     Product update(Long id, Product product);
 
-    /**
-     * Deletes a product by its ID.
-     *
-     * @param id The ID of the product to delete.
-     */
     void delete(Long id);
+
+    default ProductDTO convertToDto(Product product) {
+        ProductDTO productDto = new ProductDTO();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setActive(product.getActive() == 1);
+        productDto.setDescription(product.getDescription());
+        productDto.setImage(product.getImage());
+        productDto.setPrice(product.getPrice());
+        productDto.setStock(product.getStock());
+        return productDto;
+    }
+
+    default Product convertToEntity(ProductDTO productDto) {
+        Product product = new Product();
+        if (productDto.getId() != null) {
+            product.setId(productDto.getId());
+        }
+        product.setName(productDto.getName());
+        product.setActive((byte) (productDto.getActive() ? 1 : 0));
+        product.setDescription(productDto.getDescription());
+        product.setImage(productDto.getImage());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+        return product;
+    }
+
 }

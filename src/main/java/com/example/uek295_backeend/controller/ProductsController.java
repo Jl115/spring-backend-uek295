@@ -1,7 +1,7 @@
 package com.example.uek295_backeend.controller;
 
-import com.example.uek295_backeend.entity.Product;
 import com.example.uek295_backeend.service.ProductService;
+import com.example.uek295_backeend.service.dtos.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,31 +14,26 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
 
-    // Product GET Mapping by ID
     @GetMapping("/product/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public ProductDTO getProductById(@PathVariable Long id) {
         return productService.getById(id);
     }
 
-    // Get all products
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productService.getAll();
     }
 
-    // Create a product
     @PostMapping("/product")
-    public Product createProduct(@RequestBody Product product) {
-        return productService.create(product);
+    public ProductDTO createProduct(@RequestBody ProductDTO productDto) {
+        return productService.create(productDto);
     }
 
-    // Update a product
     @PutMapping("/product/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return productService.update(id, product);
+    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDto) {
+        return productService.update(id, productDto);
     }
 
-    // Delete a product
     @DeleteMapping("/product/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.delete(id);

@@ -3,91 +3,68 @@ package com.example.uek295_backeend.service.implementation;
 import com.example.uek295_backeend.entity.Product;
 import com.example.uek295_backeend.repository.ProductRepository;
 import com.example.uek295_backeend.service.ProductService;
+import com.example.uek295_backeend.service.dtos.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * Implementation of the ProductService interface.
- * This class handles the core business logic related to the Product entity.
- */
 @Service
 public class ProductServiceImplementation implements ProductService {
 
-    /**
-     * The product repository used to interact with the database.
-     */
     @Autowired
     private ProductRepository productRepository;
 
-    /**
-     * Creates a new product.
-     *
-     * @param product The product object to be created.
-     * @return The saved product object.
-     */
     @Override
     public Product create(Product product) {
-        return productRepository.save(product);
+        return null;
     }
 
-    /**
-     * Retrieves a product by its ID.
-     *
-     * @param id The ID of the product to retrieve.
-     * @return The retrieved product.
-     * @throws ResourceNotFoundException If the product with the specified ID is not found.
-     */
     @Override
-    public Product getById(Long id) {
-        return productRepository.findById(id.intValue())
-                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+    public ProductDTO create(ProductDTO productDto) {
+        Product product = convertToEntity(productDto);
+        Product savedProduct = productRepository.save(product);
+        return convertToDto(savedProduct);
     }
 
-    /**
-     * Retrieves all the products.
-     *
-     * @return A list of all products.
-     */
     @Override
-    public List<Product> getAll() {
-        return productRepository.findAll();
-    }
-
-    /**
-     * Updates a product's details.
-     *
-     * @param id  The ID of the product to update.
-     * @param productToUpdate  The product object with updated details.
-     * @return The updated product.
-     * @throws ResourceNotFoundException If the product with the specified ID is not found.
-     */
-    @Override
-    public Product update(Long id, Product productToUpdate) {
+    public ProductDTO getById(Long id) {
         Product product = productRepository.findById(id.intValue())
                 .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
-
-        // Updating the product's details.
-        product.setName(productToUpdate.getName());
-        product.setDescription(productToUpdate.getDescription());
-        product.setPrice(productToUpdate.getPrice());
-        product.setActive(productToUpdate.getActive());
-        product.setCategory(productToUpdate.getCategory());
-        product.setImage(productToUpdate.getImage());
-        product.setSku(productToUpdate.getSku());
-        product.setStock(productToUpdate.getStock());
-
-        return productRepository.save(product);
+        return convertToDto(product);
     }
 
-    /**
-     * Deletes a product by its ID.
-     *
-     * @param id The ID of the product to delete.
-     * @throws ResourceNotFoundException If the product with the specified ID is not found.
-     */
+    @Override
+    public List<ProductDTO> getAll() {
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO update(Long id, ProductDTO productDtoToUpdate) {
+        Product existingProduct = productRepository.findById(id.intValue())
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
+
+        Product productToUpdate = convertToEntity(productDtoToUpdate);
+
+        existingProduct.setName(productToUpdate.getName());
+        existingProduct.setDescription(productToUpdate.getDescription());
+        existingProduct.setPrice(productToUpdate.getPrice());
+        existingProduct.setActive(productToUpdate.getActive());
+        existingProduct.setImage(productToUpdate.getImage());
+        existingProduct.setStock(productToUpdate.getStock());
+
+        Product updatedProduct = productRepository.save(existingProduct);
+        return convertToDto(updatedProduct);
+    }
+
+    @Override
+    public Product update(Long id, Product product) {
+        return null;
+    }
+
     @Override
     public void delete(Long id) {
         if (!productRepository.existsById(id.intValue())) {
@@ -95,4 +72,16 @@ public class ProductServiceImplementation implements ProductService {
         }
         productRepository.deleteById(id.intValue());
     }
+
+    @Override
+    public ProductDTO convertToDto(Product product) {
+        return ProductService.super.convertToDto(product);
+    }
+
+    @Override
+    public Product convertToEntity(ProductDTO productDto) {
+        return ProductService.super.convertToEntity(productDto);
+    }
+
+    // Conversion methods are inherited from the ProductService interface
 }
