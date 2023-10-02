@@ -1,51 +1,32 @@
-package com.example.uek295_backeend.entity;
-
-import jakarta.persistence.*;
+package com.example.uek295_backeend.service.dtos;
 
 
-@Entity
-@Table(name = "User")
-public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+//TODO ASK THE TEACHER IF THE UserDTO NEEDS ID'S
+public class UserDTO {
 
-    @Column(length = 500)
+    private Integer userId;
+
     private String name;
-
-    @Column(length = 40)
     private String password;
-
-    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    @Column(length = 1000)
     private String image;
 
     private byte active;
 
-    private int channelId;
+    //private int channelId;
 
-    private int productId;
+    //private int productId;
 
-    //Getters and Setters
-
-
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+
+
+    public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -54,6 +35,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -79,7 +68,7 @@ public class User {
     public void setActive(byte active) {
         this.active = active;
     }
-
+    /*
     public int getChannelId() {
         return channelId;
     }
@@ -88,6 +77,8 @@ public class User {
         this.channelId = channelId;
     }
 
+
+
     public int getProductId() {
         return productId;
     }
@@ -95,4 +86,6 @@ public class User {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+     */
 }

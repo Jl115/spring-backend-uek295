@@ -1,35 +1,48 @@
 package com.example.uek295_backeend.controller;
 
 
+import com.example.uek295_backeend.service.UserService;
+import com.example.uek295_backeend.service.dtos.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("user")
+@RequestMapping("/")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     // GET Mapping to get a specific user by ID
-    @GetMapping("/{id}")
-    public String getUserById(@PathVariable String id) {
-        return "User GET by ID works, ID is: " + id;
+    @GetMapping("/user/{id}")
+    public UserDTO getUserById(@PathVariable Long id) {
+        return userService.getById(id);
     }
 
     // GET Mapping to get all users
-    @GetMapping("/")
-    public String getUsers() {
-        return "Users GET works";
+    @GetMapping("/user")
+    public List<UserDTO> getAllUsers() {
+        return userService.getAll();
     }
 
     // POST Mapping to create a new user
-    @PostMapping("/")
-    public String postUser() {
-        return "User POST works";
+    @PostMapping("/user")
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+        return userService.create(userDTO);
+    }
+
+    @PutMapping("/user/{id}")
+    public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO ) {
+        return userService.update(id, userDTO);
     }
 
     // DELETE Mapping to delete a user by ID
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable String id) {
-
-        return id + "deleted";
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+        return "User with " + id + "deleted successfully";
     }
 
 

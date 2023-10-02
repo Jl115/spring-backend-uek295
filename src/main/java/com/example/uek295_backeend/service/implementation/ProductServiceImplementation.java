@@ -38,8 +38,8 @@ public class ProductServiceImplementation implements ProductService {
 
     @Override
     public List<ProductDTO> getAll() {
-        List<Product> products = productRepository.findAll();
-        return products.stream().map(this::convertToDto).collect(Collectors.toList());
+        List<Product> productList = productRepository.findAll();
+        return productList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -83,5 +83,4 @@ public class ProductServiceImplementation implements ProductService {
         return ProductService.super.convertToEntity(productDto);
     }
 
-    // Conversion methods are inherited from the ProductService interface
 }
