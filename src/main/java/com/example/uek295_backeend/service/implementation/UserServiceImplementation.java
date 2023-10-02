@@ -11,23 +11,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Override
-    public User create(User user) {
-        return null;
-    }
 
     @Override
-    public UserDTO create(UserDTO userDTO) {
-        User user = convertToEntity(userDTO);
-        User savedUser = userRepository.save(user);
-        return convertToDto(savedUser);
+    public User create(User user) {
+        return userRepository.save(user);
     }
+
 
     @Override
     public UserDTO getById(Long id) {
@@ -39,23 +33,24 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<UserDTO> getAll() {
         List<User> userList = userRepository.findAll();
-        return  userList.stream().map(this::convertToDto).collect(Collectors.toList());
+        return userList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO update(Long id, UserDTO userDtoToUpdate) {
+    public UserDTO update(Long id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id.intValue())
                 .orElseThrow(() -> new ResourceNotFoundException("User with the " + id + " not found"));
-        User userToUpdate = convertToEntity(userDtoToUpdate);
+        User userToUpdate = convertToEntity(userDTO);
         existingUser.setName(userToUpdate.getName());
         existingUser.setDescription(userToUpdate.getDescription());
         existingUser.setUserId(userToUpdate.getUserId());
         existingUser.setImage(userToUpdate.getImage());
         existingUser.setChannelId(userToUpdate.getChannelId());
         existingUser.setActive(userToUpdate.getActive());
-        existingUser.setPassword(userToUpdate.getPassword());
+        if (userToUpdate.getPassword() != null && !userToUpdate.getPassword().isEmpty()) {
+            existingUser.setPassword(userToUpdate.getPassword());
+        }
         existingUser.setProductId(userToUpdate.getProductId());
-
         User updatedUser = userRepository.save(existingUser);
         return convertToDto(updatedUser);
     }
@@ -68,13 +63,18 @@ public class UserServiceImplementation implements UserService {
         userRepository.deleteById(id.intValue());
     }
 
-    @Override
-    public UserDTO convertToDto(User user) {
-        return UserService.super.convertToDto(user);
-    }
+
 
     @Override
-    public User convertToEntity(UserDTO userDto) {
-        return UserService.super.convertToEntity(userDto);
+    public User convertToEntity(UserDTO userDTO) {
+        User user = new User();
+        if (userDTO.getUserId() != null) {
+            user.setUserId(userDTO.getUserId());
+        }
+        user.setName(userDTO.getName());
+        user.setDescription(userDTO.getDescription());
+        user.setActive(userDTO.getActive());
+        user.setImage(userDTO.getImage());
+        return user;
     }
 }

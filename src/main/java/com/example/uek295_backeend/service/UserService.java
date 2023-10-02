@@ -8,14 +8,12 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    User create(User user);
 
-    UserDTO create(UserDTO userDTO);
+    User create(User user);
 
     UserDTO getById(Long id);
 
     List<UserDTO> getAll();
-
 
     UserDTO update(Long id, UserDTO userDTO);
 
@@ -28,7 +26,6 @@ public interface UserService {
         userDTO.setDescription(user.getDescription());
         userDTO.setActive(user.getActive());
         userDTO.setImage(user.getImage());
-        userDTO.setPassword(user.getPassword());
         return userDTO;
     }
 
@@ -41,7 +38,6 @@ public interface UserService {
         user.setDescription(userDTO.getDescription());
         user.setActive(userDTO.getActive());
         user.setImage(userDTO.getImage());
-        user.setPassword(userDTO.getPassword());
         return user;
     }
 }

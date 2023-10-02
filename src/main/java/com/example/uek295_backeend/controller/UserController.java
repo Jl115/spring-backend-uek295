@@ -1,9 +1,11 @@
 package com.example.uek295_backeend.controller;
 
-
+import com.example.uek295_backeend.entity.User;
 import com.example.uek295_backeend.service.UserService;
 import com.example.uek295_backeend.service.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +31,12 @@ public class UserController {
 
     // POST Mapping to create a new user
     @PostMapping("/user")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.create(userDTO);
+    public User createUser(@RequestBody User user) {
+        return userService.create(user);
     }
 
     @PutMapping("/user/{id}")
-    public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO ) {
+    public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         return userService.update(id, userDTO);
     }
 
@@ -42,8 +44,11 @@ public class UserController {
     @DeleteMapping("/user/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "User with " + id + "deleted successfully";
+        return "User with " + id + " deleted successfully";
     }
 
-
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleExceptions(Exception ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
