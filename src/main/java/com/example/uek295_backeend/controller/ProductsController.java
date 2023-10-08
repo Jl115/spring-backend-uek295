@@ -1,5 +1,6 @@
 package com.example.uek295_backeend.controller;
 
+import com.example.uek295_backeend.entity.Product;
 import com.example.uek295_backeend.service.ProductService;
 import com.example.uek295_backeend.service.dtos.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class ProductsController {
 
     @Autowired
@@ -25,8 +26,8 @@ public class ProductsController {
     }
 
     @PostMapping("/product")
-    public ProductDTO createProduct(@RequestBody ProductDTO productDto) {
-        return productService.create(productDto);
+    public Product createProduct(@RequestBody Product product) {
+        return productService.create(product);
     }
 
     @PutMapping("/product/{id}")

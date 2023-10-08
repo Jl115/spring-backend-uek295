@@ -1,6 +1,7 @@
 package com.example.uek295_backeend.service.dtos;
 
 
+import com.example.uek295_backeend.entity.Category;
 
 public class ProductDTO {
     private String name;
@@ -9,7 +10,7 @@ public class ProductDTO {
     private int stock;
 
     private Integer id;
-    // private CategoryDTO category;
+    private CategoryDTO category;
     private String image;
     private String description;
 
@@ -45,15 +46,17 @@ public class ProductDTO {
         this.stock = stock;
     }
 
-    /*
-    public Category getCategory() {
+
+    public CategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryDTO category) {
         this.category = category;
     }
-    */
+
+
+
 
     public String getImage() {
         return image;

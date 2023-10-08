@@ -11,15 +11,13 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private byte active;
-
     @Column(length = 255)
     private String name;
 
     //Getters and Setters
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -27,13 +25,6 @@ public class Category {
         this.id = id;
     }
 
-    public byte getActive() {
-        return active;
-    }
-
-    public void setActive(byte active) {
-        this.active = active;
-    }
 
     public String getName() {
         return name;

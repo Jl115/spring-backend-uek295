@@ -1,6 +1,9 @@
 package com.example.uek295_backeend.service.dtos;
 
 //TODO ASK THE TEACHER IF THE UserDTO NEEDS ID'S
+
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+
 public class UserDTO {
 
     private Integer userId;

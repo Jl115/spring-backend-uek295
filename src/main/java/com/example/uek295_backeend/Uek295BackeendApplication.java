@@ -2,6 +2,7 @@ package com.example.uek295_backeend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class Uek295BackeendApplication {
