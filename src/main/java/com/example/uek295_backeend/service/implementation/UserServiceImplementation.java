@@ -3,12 +3,11 @@ package com.example.uek295_backeend.service.implementation;
 import com.example.uek295_backeend.entity.User;
 import com.example.uek295_backeend.repository.UserRepository;
 import com.example.uek295_backeend.service.UserService;
+import com.example.uek295_backeend.service.dtos.UserAuthDTO;
 import com.example.uek295_backeend.service.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +19,10 @@ public class UserServiceImplementation implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User create(User user) {
-        return userRepository.save(user);
+    public UserAuthDTO create(UserAuthDTO userAuthDTO) {
+        User user = convertToEntity(userAuthDTO);
+        User savedUser = userRepository.save(user);
+        return convertToAuthDto(savedUser);
     }
 
 
@@ -45,16 +46,36 @@ public class UserServiceImplementation implements UserService {
         User userToUpdate = convertToEntity(userDTO);
         existingUser.setName(userToUpdate.getName());
         existingUser.setDescription(userToUpdate.getDescription());
-        existingUser.setUserId(userToUpdate.getUserId());
+        //existingUser.setUserId(userToUpdate.getUserId());
         existingUser.setImage(userToUpdate.getImage());
         existingUser.setChannelId(userToUpdate.getChannelId());
         existingUser.setActive(userToUpdate.getActive());
         if (userToUpdate.getPassword() != null && !userToUpdate.getPassword().isEmpty()) {
             existingUser.setPassword(userToUpdate.getPassword());
         }
-        existingUser.setProductId(userToUpdate.getProductId());
+        //existingUser.setProductId(userToUpdate.getProductId());
         User updatedUser = userRepository.save(existingUser);
         return convertToDto(updatedUser);
+    }
+
+    @Override
+    public UserAuthDTO update(Long id, UserAuthDTO userAuthDTO) {
+        User existingUser = userRepository.findById(id.intValue())
+                .orElseThrow(() -> new ResourceNotFoundException("User with the " + id + " not found"));
+        User userToUpdate = convertToEntity(userAuthDTO);
+        existingUser.setName(userToUpdate.getName());
+        existingUser.setDescription(userToUpdate.getDescription());
+        //existingUser.setUserId(userToUpdate.getUserId());
+        existingUser.setImage(userToUpdate.getImage());
+        existingUser.setChannelId(userToUpdate.getChannelId());
+        existingUser.setActive(userToUpdate.getActive());
+        existingUser.setAdmin(userToUpdate.getAdmin());
+        if (userToUpdate.getPassword() != null && !userToUpdate.getPassword().isEmpty()) {
+            existingUser.setPassword(userToUpdate.getPassword());
+        }
+        //existingUser.setProductId(userToUpdate.getProductId());
+        User updatedUser = userRepository.save(existingUser);
+        return convertToAuthDto(updatedUser);
     }
 
     @Override
@@ -65,6 +86,15 @@ public class UserServiceImplementation implements UserService {
         userRepository.deleteById(id.intValue());
     }
 
+    @Override
+    public UserDTO convertToDto(User user) {
+        return UserService.super.convertToDto(user);
+    }
+
+    @Override
+    public UserAuthDTO convertToAuthDto(User user) {
+        return UserService.super.convertToAuthDto(user);
+    }
 
 
     @Override

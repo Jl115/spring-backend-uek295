@@ -25,6 +25,8 @@ public class User {
 
     private byte active;
 
+    private byte admin;
+
     private int channelId;
 
     private int productId;
@@ -94,5 +96,13 @@ public class User {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public byte getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(byte admin) {
+        this.admin = admin;
     }
 }

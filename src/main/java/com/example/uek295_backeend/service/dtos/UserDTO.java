@@ -11,8 +11,7 @@ public class UserDTO {
     private String description;
     private String image;
     private byte active;
-    //private int channelId;
-    //private int productId;
+
 
     public Integer getUserId() {
         return userId;

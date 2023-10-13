@@ -2,6 +2,7 @@ package com.example.uek295_backeend.controller;
 
 import com.example.uek295_backeend.entity.User;
 import com.example.uek295_backeend.service.UserService;
+import com.example.uek295_backeend.service.dtos.UserAuthDTO;
 import com.example.uek295_backeend.service.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +32,21 @@ public class UserController {
 
     // POST Mapping to create a new user
     @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return userService.create(user);
+    public UserAuthDTO createUser(@RequestBody UserAuthDTO userAuthDTO) {
+        return userService.create(userAuthDTO);
     }
 
+    //put mapping to update a user
     @PutMapping("/user/{id}")
     public UserDTO updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         return userService.update(id, userDTO);
+    }
+
+
+    //TODO immplementing grant to admin
+    @PutMapping("/user/{id}/admin")
+    public UserAuthDTO updateToAdmin(@PathVariable Long id, @RequestBody UserAuthDTO userAuthDTO) {
+        return userService.update(id, userAuthDTO);
     }
 
     // DELETE Mapping to delete a user by ID

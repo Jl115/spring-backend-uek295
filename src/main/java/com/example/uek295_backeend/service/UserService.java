@@ -1,6 +1,7 @@
 package com.example.uek295_backeend.service;
 
 import com.example.uek295_backeend.entity.User;
+import com.example.uek295_backeend.service.dtos.UserAuthDTO;
 import com.example.uek295_backeend.service.dtos.UserDTO;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,15 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    User create(User user);
+    UserAuthDTO create(UserAuthDTO userAuthDTO);
 
     UserDTO getById(Long id);
 
     List<UserDTO> getAll();
 
     UserDTO update(Long id, UserDTO userDTO);
+
+    UserAuthDTO update(Long id, UserAuthDTO userAuthDTO);
 
     void delete(Long id);
 
@@ -29,6 +32,15 @@ public interface UserService {
         return userDTO;
     }
 
+    default UserAuthDTO convertToAuthDto(User user) {
+        UserAuthDTO userAuthDTO = new UserAuthDTO();
+        userAuthDTO.setUserId(user.getUserId());
+        userAuthDTO.setName(user.getName());
+        userAuthDTO.setDescription(user.getDescription());
+        userAuthDTO.setActive(user.getActive());
+        userAuthDTO.setImage(user.getImage());
+        return userAuthDTO;
+    }
     default User convertToEntity(UserDTO userDTO) {
         User user = new  User();
         if (userDTO.getUserId() != null) {
