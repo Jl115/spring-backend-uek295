@@ -1,6 +1,5 @@
 package com.example.uek295_backeend.category;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +11,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
     // GET Mapping
     @GetMapping({"/category/{id}"})
     public CategoryDTO getCategoriesById(@PathVariable Long id) {

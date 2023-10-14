@@ -8,11 +8,9 @@ import java.util.List;
 
 @Service
 public class CategoryServiceImplementation implements CategoryService {
-
-
-
     @Autowired
     private CategoryRepository categoryRepository;
+
     @Override
     public Category create(Category category) {
         return null;
@@ -44,6 +42,7 @@ public class CategoryServiceImplementation implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category with ID " + id + " not found"));
         Category updatedCategory = convertToEntity(categoryToUpdate);
         existingCategory.setName(updatedCategory.getName());
+        existingCategory.setActive(updatedCategory.getActive());
 
         Category savedCategory = categoryRepository.save(existingCategory);
         return convertToDto(savedCategory);

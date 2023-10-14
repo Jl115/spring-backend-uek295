@@ -1,6 +1,9 @@
 package com.example.uek295_backeend.user;
 
+import com.example.uek295_backeend.product.Product;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
@@ -19,6 +22,10 @@ public class User {
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Product> products;
+
 
     @Column(length = 1000)
     private String image;
@@ -96,6 +103,14 @@ public class User {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public byte getAdmin() {

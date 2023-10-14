@@ -1,12 +1,10 @@
 package com.example.uek295_backeend.category;
 
-
 import com.example.uek295_backeend.category.Category;
 import com.example.uek295_backeend.category.CategoryDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 @Service
 public interface CategoryService {
@@ -18,12 +16,12 @@ public interface CategoryService {
 
     CategoryDTO update(Long id, CategoryDTO categoryDto);
 
-
     void delete(Long id);
 
     default CategoryDTO convertToDto(Category category) {
         CategoryDTO categoryDto = new CategoryDTO();
         categoryDto.setName(category.getName());
+        categoryDto.setActive(category.getActive());
         return categoryDto;
     }
 
@@ -33,6 +31,7 @@ public interface CategoryService {
             category.setId(category.getId());
         }
         category.setName(categoryDto.getName());
+        category.setActive(categoryDto.getActive());
         return category;
     }
 }

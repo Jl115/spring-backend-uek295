@@ -1,6 +1,7 @@
 package com.example.uek295_backeend.product;
 
 import com.example.uek295_backeend.category.Category;
+import com.example.uek295_backeend.user.User;
 import jakarta.persistence.*;
 
 
@@ -30,6 +31,10 @@ public class Product {
     private float price;
 
     private int stock;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -107,5 +112,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
