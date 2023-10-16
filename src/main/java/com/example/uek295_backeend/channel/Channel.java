@@ -17,11 +17,11 @@ public class Channel {
 
     @ManyToOne
     @JoinColumn(name = "user1_id")
-    private User user1;
+    private User userId1;
 
     @ManyToOne
     @JoinColumn(name = "user2_id")
-    private User user2;
+    private User userId2;
 
     @Column(length = 500)
     private String name;
@@ -41,20 +41,20 @@ public class Channel {
         this.id = id;
     }
 
-    public User getUser1() {
-        return user1;
+    public User getUserId1() {
+        return userId1;
     }
 
-    public void setUser1(User user1) {
-        this.user1 = user1;
+    public void setUserId1(User userId1) {
+        this.userId1 = userId1;
     }
 
-    public User getUser2() {
-        return user2;
+    public User getUserId2() {
+        return userId2;
     }
 
-    public void setUser2(User user2) {
-        this.user2 = user2;
+    public void setUserId2(User userId2) {
+        this.userId2 = userId2;
     }
 
     public String getName() {

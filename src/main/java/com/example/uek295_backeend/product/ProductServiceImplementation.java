@@ -31,7 +31,34 @@ public class ProductServiceImplementation implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found"));
         return convertToDto(product);
     }
+    @Override
+    public void createProduct(ProductDTO productDTO) {
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        // Set other fields as necessary
+        productRepository.save(product);
+    }
 
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public Product getProductById(int productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
+    @Override
+    public void updateProduct(int productId, ProductDTO productDTO) {
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product != null) {
+            product.setName(productDTO.getName());
+            product.setDescription(productDTO.getDescription());
+            // Update other fields as necessary
+            productRepository.save(product);
+        }
+    }
     @Override
     public List<ProductDTO> getAll() {
         List<Product> productList = productRepository.findAll();
@@ -67,6 +94,15 @@ public class ProductServiceImplementation implements ProductService {
             throw new ResourceNotFoundException("Product with ID " + id + " not found");
         }
         productRepository.deleteById(id.intValue());
+    }
+
+    @Override
+    public void deleteProduct(int productId) {
+        productRepository.deleteById(productId);
+    }
+    @Override
+    public List<Product> getProductsByCategoryId(int categoryId) {
+        return productRepository.findByCategoryId(categoryId);
     }
 
     @Override

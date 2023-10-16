@@ -22,7 +22,36 @@ public class CategoryServiceImplementation implements CategoryService {
         Category savedCategory = categoryRepository.save(category);
         return convertToDto(savedCategory);
     }
+    @Override
+    public void createCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        // Set other fields if necessary
+        categoryRepository.save(category);
+    }
 
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category getCategoryById(int categoryId) {
+        return categoryRepository.findById(categoryId).orElse(null);
+    }
+    @Override
+    public void updateCategory(int categoryId, CategoryDTO categoryDTO) {
+        Category category = categoryRepository.findById(categoryId).orElse(null);
+        if (category != null) {
+            category.setName(categoryDTO.getName());
+            // Update other fields as necessary
+            categoryRepository.save(category);
+        }
+    }
+    @Override
+    public void deleteCategory(int categoryId) {
+        categoryRepository.deleteById(categoryId);
+    }
     @Override
     public CategoryDTO getById(Long id) {
         Category category = categoryRepository.findById(id.intValue())

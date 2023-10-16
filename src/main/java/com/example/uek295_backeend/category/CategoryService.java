@@ -13,6 +13,8 @@ public interface CategoryService {
     CategoryDTO create(CategoryDTO categoryDto);
     CategoryDTO getById(Long id);
     List<CategoryDTO> getAll();
+    void updateCategory(int categoryId, CategoryDTO categoryDTO);
+    void deleteCategory(int categoryId);
 
     CategoryDTO update(Long id, CategoryDTO categoryDto);
 
@@ -34,4 +36,8 @@ public interface CategoryService {
         category.setActive(categoryDto.getActive());
         return category;
     }
+    void createCategory(CategoryDTO categoryDTO);
+    List<Category> getAllCategories();
+    Category getCategoryById(int categoryId);
+
 }

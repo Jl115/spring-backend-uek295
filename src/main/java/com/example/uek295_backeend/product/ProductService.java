@@ -14,10 +14,16 @@ public interface ProductService {
     ProductDTO getById(Long id);
 
     List<ProductDTO> getAll();
+    void createProduct(ProductDTO productDTO);
+    List<Product> getAllProducts();
+    Product getProductById(int productId);
+    void updateProduct(int productId, ProductDTO productDTO);
 
     ProductDTO update(Long id, ProductDTO productDto);
 
     Product update(Long id, Product product);
+    void deleteProduct(int productId);
+    List<Product> getProductsByCategoryId(int categoryId);
 
     void delete(Long id);
 
