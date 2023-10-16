@@ -17,6 +17,9 @@ public interface UserService {
 
     UserAuthDTO update(Long id, UserAuthDTO userAuthDTO);
 
+    void promoteToAdmin(int userId);
+
+
     void delete(Long id);
 
     default UserDTO convertToDto(User user) {

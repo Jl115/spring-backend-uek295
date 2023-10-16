@@ -1,4 +1,4 @@
-/*
+
 package com.example.uek295_backeend.auth;
 
 import org.springframework.context.annotation.Bean;
@@ -26,4 +26,3 @@ public class AuthConfig {
 
 }
 
- */

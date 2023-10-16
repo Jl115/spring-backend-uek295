@@ -17,7 +17,7 @@ public class User {
     @Column(length = 500)
     private String name;
 
-    @Column(length = 40)
+    @Column(length = 256)
     private String password;
 
     @Column(columnDefinition = "MEDIUMTEXT")

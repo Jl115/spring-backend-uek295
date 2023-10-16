@@ -1,4 +1,3 @@
-/*
 package com.example.uek295_backeend.auth;
 
 import jakarta.validation.constraints.NotBlank;
@@ -25,5 +24,3 @@ public class RegistrationDTO {
         this.password = password;
     }
 }
-
- */

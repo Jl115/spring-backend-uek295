@@ -6,6 +6,7 @@ import com.example.uek295_backeend.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,7 +43,15 @@ public class UserController {
     }
 
 
-    //TODO immplementing grant to admin
+    //TODO immplementing promote to admin
+
+    @PostMapping("/user/promote/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")  // Ensure that only admins can access this endpoint
+    public ResponseEntity<String> promoteToAdmin(@PathVariable int userId) {
+        userService.promoteToAdmin(userId);
+        return ResponseEntity.ok("User promoted to admin successfully");
+    }
+
     @PutMapping("/user/{id}/admin")
     public UserAuthDTO updateToAdmin(@PathVariable Long id, @RequestBody UserAuthDTO userAuthDTO) {
         return userService.update(id, userAuthDTO);

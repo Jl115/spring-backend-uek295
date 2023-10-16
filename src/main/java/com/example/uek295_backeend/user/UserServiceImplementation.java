@@ -33,6 +33,14 @@ public class UserServiceImplementation implements UserService {
         List<User> userList = userRepository.findAll();
         return userList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
+    @Override
+    public void promoteToAdmin(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.setAdmin((byte) 1);
+            userRepository.save(user);
+        }
+    }
 
     @Override
     public UserDTO update(Long id, UserDTO userDTO) {

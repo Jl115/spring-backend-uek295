@@ -8,3 +8,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+  jwt:
+    secret: 2d07de61-7742-40ef-8378-33abf049b2e3
+    expiration: 86400
+
