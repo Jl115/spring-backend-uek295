@@ -9,25 +9,26 @@ public class ChannelController {
 
     // GET Mapping to retrieve all channels
     @GetMapping("/")
-    public String getChannels() {
-        return "All channels data";
+    public ResponseEntity<String> getChannels() {
+        return ResponseEntity.ok("All channels data");
     }
 
     // GET Mapping to retrieve detailed information about a specific channel by ID
     @GetMapping("/{id}")
-    public String getChannelById(@PathVariable String id) {
-        return "Channel details for ID: " + id;
+    public ResponseEntity<String> getChannelById(@PathVariable String id) {
+        return ResponseEntity.ok("Channel details for ID: " + id);
     }
 
     // POST Mapping to create a new channel with information about both users
     @PostMapping("/")
-    public String postChannel(@RequestBody String channelInfo) {
-        return "Channel created with info: " + channelInfo;
+    public ResponseEntity<String> postChannel(@RequestBody String channelInfo) {
+        return ResponseEntity.status(201).body("Channel created with info: " + channelInfo);
     }
 
     // DELETE Mapping to delete a specific channel by ID
     @DeleteMapping("/{id}")
-    public String deleteChannel(@PathVariable String id) {
-        return "Channel with ID " + id + " deleted";
+    public ResponseEntity<Void> deleteChannel(@PathVariable String id) {
+        // Perform deletion logic here
+        return ResponseEntity.noContent().build();
     }
 }
