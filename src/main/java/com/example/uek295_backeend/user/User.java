@@ -30,12 +30,11 @@ public class User {
     @Column(length = 1000)
     private String image;
 
+    @Column
     private byte active;
-
-    private byte admin;
-
+    @Column
+    private boolean isAdmin;
     private int channelId;
-
     private int productId;
 
     //Getters and Setters
@@ -113,11 +112,11 @@ public class User {
         this.products = products;
     }
 
-    public byte getAdmin() {
-        return admin;
+    public boolean getAdmin() {
+        return isAdmin;
     }
 
-    public void setAdmin(byte admin) {
-        this.admin = admin;
+    public void setAdmin(boolean admin) {
+        this.isAdmin = admin;
     }
 }

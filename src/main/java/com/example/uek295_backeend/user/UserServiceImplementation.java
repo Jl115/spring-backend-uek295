@@ -37,7 +37,7 @@ public class UserServiceImplementation implements UserService {
     public void promoteToAdmin(int userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setAdmin((byte) 1);
+            user.setAdmin(true);
             userRepository.save(user);
         }
     }

@@ -3,43 +3,36 @@ package com.example.uek295_backeend.auth;
 import com.example.uek295_backeend.user.User;
 import com.example.uek295_backeend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 @Service
-public class AuthService implements UserDetailsService {
+public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private JwtUtil jwtUtil;
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-    public void registration(RegistrationDTO registrationDTO) {
+    private JwtService jwtService;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    public void register(RegistrationDTO registrationDto) {
         User user = new User();
-        user.setName(registrationDTO.getName());
-        user.setPassword(bCryptPasswordEncoder.encode(registrationDTO.getPassword()));
+        user.setName(registrationDto.getName());
+        user.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         userRepository.save(user);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+    public String getJwt(LoginDTO loginDto) {
+        User user = userRepository.findByName(loginDto.getUserName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        if (!bCryptPasswordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), new ArrayList<>());
-    }
 
-    public String authenticate(String username, String password) {
-        User user = userRepository.findByName(username);
-        if (user != null && bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            return jwtUtil.generateToken(user);
-        }
-        return null;
+        return jwtService.createJwt(user.getName());
     }
 }

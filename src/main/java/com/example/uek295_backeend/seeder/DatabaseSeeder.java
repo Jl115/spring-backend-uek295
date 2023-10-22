@@ -33,7 +33,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             User admin = new User();
             admin.setName("admin");
             admin.setPassword(bCryptPasswordEncoder.encode("admin123"));
-            admin.setAdmin((byte) 1); // Set as admin
+            admin.setAdmin( true); // Set as admin
             userRepository.save(admin);
         }
     }
