@@ -48,7 +48,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             clothing.setName("Clothing");
             categoryRepository.save(clothing);
 
-            // Add more categories as needed
+            
         }
     }
 
@@ -64,7 +64,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             shirt.setCategory(categoryRepository.findByName("Clothing"));
             productRepository.save(shirt);
 
-            // Add more products as needed
+            
         }
     }
 
