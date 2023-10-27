@@ -1,5 +1,7 @@
 package com.example.uek295_backeend.product;
 
+import com.example.uek295_backeend.category.Category;
+import com.example.uek295_backeend.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ public class ProductServiceImplementation implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public Product create(Product product) {
@@ -36,7 +40,20 @@ public class ProductServiceImplementation implements ProductService {
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
-        // Set other fields as necessary
+        product.setPrice(productDTO.getPrice());
+        product.setActive(productDTO.getActive() ? (byte) 1 : (byte) 0);
+        product.setImage(productDTO.getImage());
+        product.setStock(productDTO.getStock());
+        product.setSku(productDTO.getSku());
+        // Fetch the category from the database
+        /*
+        Category category = categoryRepository.findById(productDTO.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category with ID " + productDTO.getCategoryId() + " not found"));
+        product.setCategory(category);
+        */
+
+
+
         productRepository.save(product);
     }
 
@@ -49,16 +66,7 @@ public class ProductServiceImplementation implements ProductService {
     public Product getProductById(int productId) {
         return productRepository.findById(productId).orElse(null);
     }
-    @Override
-    public void updateProduct(int productId, ProductDTO productDTO) {
-        Product product = productRepository.findById(productId).orElse(null);
-        if (product != null) {
-            product.setName(productDTO.getName());
-            product.setDescription(productDTO.getDescription());
-            // Update other fields as necessary
-            productRepository.save(product);
-        }
-    }
+
     @Override
     public List<ProductDTO> getAll() {
         List<Product> productList = productRepository.findAll();
@@ -78,6 +86,7 @@ public class ProductServiceImplementation implements ProductService {
         existingProduct.setActive(productToUpdate.getActive());
         existingProduct.setImage(productToUpdate.getImage());
         existingProduct.setStock(productToUpdate.getStock());
+        existingProduct.setSku(productToUpdate.getSku());
 
         Product updatedProduct = productRepository.save(existingProduct);
         return convertToDto(updatedProduct);

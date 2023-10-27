@@ -35,6 +35,12 @@ public class DatabaseSeeder implements CommandLineRunner {
             admin.setPassword(bCryptPasswordEncoder.encode("admin123"));
             admin.setAdmin( true); // Set as admin
             userRepository.save(admin);
+
+            User test = new User();
+            test.setName("admin");
+            test.setPassword(bCryptPasswordEncoder.encode("test123"));
+            test.setAdmin( false); // dont set as admin
+            userRepository.save(test);
         }
     }
 
@@ -56,7 +62,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (productRepository.count() == 0) {
             Product phone = new Product();
             phone.setName("Phone");
-            phone.setCategory(categoryRepository.findByName("Electronics")); // Assuming you have a method findByName in your CategoryRepository
+            phone.setCategory(categoryRepository.findByName("Electronics"));
             productRepository.save(phone);
 
             Product shirt = new Product();

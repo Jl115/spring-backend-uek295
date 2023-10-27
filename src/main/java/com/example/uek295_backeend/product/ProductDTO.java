@@ -1,6 +1,7 @@
 package com.example.uek295_backeend.product;
 
 
+import com.example.uek295_backeend.category.Category;
 import com.example.uek295_backeend.category.CategoryDTO;
 
 public class ProductDTO {
@@ -8,11 +9,14 @@ public class ProductDTO {
     private Boolean active;
     private float price;
     private int stock;
+    private String sku;
 
     private Integer id;
-    private CategoryDTO category;
+    private Category category;
     private String image;
     private String description;
+
+    private int categoryId;
 
     public String getName() {
         return name;
@@ -42,16 +46,23 @@ public class ProductDTO {
         return stock;
     }
 
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
     public void setStock(int stock) {
         this.stock = stock;
     }
 
 
-    public CategoryDTO getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDTO category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -80,5 +91,13 @@ public class ProductDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -2,16 +2,41 @@ package com.example.uek295_backeend.user;
 
 //TODO ASK THE TEACHER IF THE UserDTO NEEDS ID'S
 
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
+
+/**
+ * Data Transfer Object (DTO) for user operations.
+ * This class provides a simplified representation of the User entity for transfer between
+ * the application and the client.
+ */
 public class UserDTO {
 
+    /**
+     * The unique ID of the user.
+     */
     private Integer userId;
+
+    /**
+     * The name of the user.
+     */
     private String name;
+
+    /**
+     * Description associated with the user.
+     */
     private String description;
+
+    /**
+     * Image or avatar associated with the user.
+     */
     private String image;
+
+    /**
+     * Flag indicating if the user is active.
+     */
     private byte active;
 
+    // Getters, setters, and other methods can be added as needed.
 
     public Integer getUserId() {
         return userId;

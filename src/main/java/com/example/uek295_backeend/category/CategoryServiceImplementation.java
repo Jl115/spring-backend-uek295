@@ -26,7 +26,6 @@ public class CategoryServiceImplementation implements CategoryService {
     public void createCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         category.setName(categoryDTO.getName());
-        // Set other fields if necessary
         categoryRepository.save(category);
     }
 

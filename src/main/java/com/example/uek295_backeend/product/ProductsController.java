@@ -17,29 +17,6 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/product/{id}")
-    public ProductDTO getProductById(@PathVariable Long id) {
-        return productService.getById(id);
-    }
-
-
-
-    @PutMapping("/product/{id}")
-    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDto) {
-        return productService.update(id, productDto);
-    }
-    @PostMapping("/products")
-    @PreAuthorize("hasRole('ADMIN')")  // Ensure that only admins can access this endpoint
-    public ResponseEntity<String> createProduct(@RequestBody ProductDTO productDTO) {
-        productService.createProduct(productDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully");
-    }
-
-    @DeleteMapping("/product/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        productService.delete(id);
-        return "Product with id: " + id + " deleted successfully";
-    }
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -50,10 +27,20 @@ public class ProductsController {
     public ResponseEntity<Product> getProductById(@PathVariable int productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
+
+
+    @PostMapping("/products")
+    @PreAuthorize("hasRole('ADMIN')")  // Ensure that only admins can access this endpoint
+    public ResponseEntity<String> createProduct(@RequestBody ProductDTO productDTO) {
+        productService.createProduct(productDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully");
+    }
+
+
     @PutMapping("/products/{productId}")
     @PreAuthorize("hasRole('ADMIN')")  // Ensure that only admins can access this endpoint
-    public ResponseEntity<String> updateProduct(@PathVariable int productId, @RequestBody ProductDTO productDTO) {
-        productService.updateProduct(productId, productDTO);
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductDTO productDTO) {
+        productService.update(productId, productDTO);
         return ResponseEntity.ok("Product updated successfully");
     }
     @DeleteMapping("/products/{productId}")
@@ -63,9 +50,6 @@ public class ProductsController {
         return ResponseEntity.ok("Product deleted successfully");
     }
 
-    @GetMapping("/categories/{categoryId}/products")
-    public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable int categoryId) {
-        return ResponseEntity.ok(productService.getProductsByCategoryId(categoryId));
-    }
+
 
 }
