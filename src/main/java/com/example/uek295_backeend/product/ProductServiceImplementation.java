@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO add connection to Category (many to one)
 @Service
 public class ProductServiceImplementation implements ProductService {
 
