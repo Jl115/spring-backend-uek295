@@ -11,10 +11,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is responsible for seeding initial data into the database.
+ */
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -22,38 +26,50 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * Seeds the entire database with initial data.
+     */
     public void seedDatabase() {
         seedUsers();
         seedCategories();
         seedProducts();
     }
 
+    /**
+     * Seeds the User table with initial users.
+     */
     private void seedUsers() {
+        // Checking if there are fewer than 5 users
         if (userRepository.count() < 5) {
+            // Creating and saving admin user
             User admin = new User();
             admin.setName("admin");
             admin.setPassword(bCryptPasswordEncoder.encode("admin123"));
-            admin.setAdmin(true); // Set as admin
+            admin.setAdmin(true);
             userRepository.save(admin);
 
+            // Creating and saving test user 1
             User test1 = new User();
             test1.setName("test1");
             test1.setPassword(bCryptPasswordEncoder.encode("test123"));
-            test1.setAdmin(false); // Not an admin
+            test1.setAdmin(false);
             userRepository.save(test1);
 
+            // Creating and saving test user 2
             User test2 = new User();
             test2.setName("test2");
             test2.setPassword(bCryptPasswordEncoder.encode("test456"));
             test2.setAdmin(false);
             userRepository.save(test2);
 
+            // Creating and saving test user 3
             User test3 = new User();
             test3.setName("test3");
             test3.setPassword(bCryptPasswordEncoder.encode("test789"));
             test3.setAdmin(false);
             userRepository.save(test3);
 
+            // Creating and saving test user 4
             User test4 = new User();
             test4.setName("test4");
             test4.setPassword(bCryptPasswordEncoder.encode("test000"));
@@ -62,32 +78,42 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-
+    /**
+     * Seeds the Category table with initial categories.
+     */
     private void seedCategories() {
+        // Checking if there are fewer than 5 categories
         if (categoryRepository.count() < 5) {
+            // Creating and saving Electronics category
             Category electronics = new Category();
             electronics.setName("Electronics");
             categoryRepository.save(electronics);
 
+            // Creating and saving Clothing category
             Category clothing = new Category();
             clothing.setName("Clothing");
             categoryRepository.save(clothing);
 
+            // Creating and saving Books category
             Category books = new Category();
             books.setName("Books");
             categoryRepository.save(books);
 
+            // Creating and saving Home & Garden category
             Category home = new Category();
             home.setName("Home & Garden");
             categoryRepository.save(home);
 
+            // Creating and saving Sports & Outdoors category
             Category sports = new Category();
             sports.setName("Sports & Outdoors");
             categoryRepository.save(sports);
         }
     }
 
-
+    /**
+     * Seeds the Product table with initial products.
+     */
     private void seedProducts() {
         if (productRepository.count() < 5) {
             Product phone = new Product();
@@ -147,6 +173,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
+    /**
+     * This method is executed when the application starts, seeding the database.
+     */
 
     @Override
     public void run(String... args) throws Exception {
