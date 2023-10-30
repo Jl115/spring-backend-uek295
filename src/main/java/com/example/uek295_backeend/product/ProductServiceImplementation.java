@@ -46,16 +46,14 @@ public class ProductServiceImplementation implements ProductService {
         product.setImage(productDTO.getImage());
         product.setStock(productDTO.getStock());
         product.setSku(productDTO.getSku());
-        // Fetch the category from the database
-        /*
-        Category category = categoryRepository.findById(productDTO.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category with ID " + productDTO.getCategoryId() + " not found"));
-        product.setCategory(category);
-        */
+        // Fetch the category from the database¨
 
-
-
-        productRepository.save(product);
+        if (productDTO.getCategory() != null) {
+            product.setCategory(categoryRepository.findByName(productDTO.getCategory().getName()));
+            productRepository.save(product);
+        } else {
+            throw new ResourceNotFoundException("Category with Name " + productDTO.getCategory().getName() + " not found");
+        }
     }
 
     @Override
@@ -88,6 +86,8 @@ public class ProductServiceImplementation implements ProductService {
         existingProduct.setImage(productToUpdate.getImage());
         existingProduct.setStock(productToUpdate.getStock());
         existingProduct.setSku(productToUpdate.getSku());
+        // Fetch the category from the database
+        existingProduct.setCategory(categoryRepository.findByName(productDtoToUpdate.getCategory().getName()));
 
         Product updatedProduct = productRepository.save(existingProduct);
         return convertToDto(updatedProduct);

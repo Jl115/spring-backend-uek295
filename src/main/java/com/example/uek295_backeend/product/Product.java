@@ -4,6 +4,7 @@ import com.example.uek295_backeend.category.Category;
 import com.example.uek295_backeend.user.User;
 import jakarta.persistence.*;
 
+import java.util.Optional;
 
 
 @Entity
@@ -32,12 +33,8 @@ public class Product {
 
     private int stock;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
 
     public int getId() {
@@ -114,11 +111,4 @@ public class Product {
         this.category = category;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

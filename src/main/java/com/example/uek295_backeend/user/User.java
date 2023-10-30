@@ -38,11 +38,7 @@ public class User {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    /**
-     * List of products associated with the user.
-     */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Product> products;
+
 
     /**
      * Image or avatar associated with the user.
@@ -141,13 +137,7 @@ public class User {
         this.productId = productId;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 
     public boolean getAdmin() {
         return isAdmin;
